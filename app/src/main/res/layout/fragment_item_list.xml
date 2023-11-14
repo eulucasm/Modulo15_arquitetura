@@ -6,8 +6,8 @@
     android:name="com.lucao.hqawasomeapp.hqFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:background="#7B7979"
+    android:backgroundTint="#7B7979"
     app:layoutManager="LinearLayoutManager"
     tools:context=".HQFragment"
     tools:listitem="@layout/fragment_item" />

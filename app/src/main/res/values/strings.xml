@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">HQAwasomeApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="share_button_title">Compartilhar</string>
+    <string name="imagem_hq">imagem hq</string>
+    <string name="descricao_detalhe">descricao detalhe</string>
+    <string name="new_story_title">Nova história</string>
+    <string name="error_msg">Ops, aconteceu um erro. Tente novamente mais tarde.</string>
 </resources>
