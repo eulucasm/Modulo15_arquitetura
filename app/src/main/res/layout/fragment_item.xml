@@ -20,7 +20,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:layout_marginTop="20dp"
-                android:text="@{hqItem.idString}"
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -33,18 +32,17 @@
                 android:layout_height="200dp"
                 android:contentDescription="@string/imagem_hq"
                 android:scaleType="centerCrop"
-                app:srcUrl='@{hqItem.imageUrl ?? "" }'
+                android:src="@drawable/comics_news"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                />
 
             <TextView
                 android:id="@+id/content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="@{hqItem.content}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

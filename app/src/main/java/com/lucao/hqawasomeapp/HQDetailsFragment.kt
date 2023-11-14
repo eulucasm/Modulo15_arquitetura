@@ -15,5 +15,4 @@ class HQDetailsFragment : Fragment() {
 
         return inflater.inflate(R.layout.fragment_h_q_details, container, false)
     }
-
 }

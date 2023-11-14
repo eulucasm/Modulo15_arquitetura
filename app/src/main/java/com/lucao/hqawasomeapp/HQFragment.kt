@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.lucao.hqawasomeapp.placeholder.PlaceholderContent
 
-class HQFragment : Fragment() {
+class HQFragment : Fragment(), HQItemListener {
 
     private var columnCount = 1
     private val viewModel by navGraphViewModels<HQViewModel>(R.id.hq_graph) { defaultViewModelProviderFactory }
@@ -19,9 +20,6 @@ class HQFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
     }
 
     override fun onCreateView(
@@ -37,24 +35,14 @@ class HQFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyhqRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                adapter = MyhqRecyclerViewAdapter(PlaceholderContent.ITEMS, this@HQFragment)
             }
         }
         return view
     }
 
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            HQFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
+    override fun onItemSelected(position: Int) {
+        findNavController().navigate(R.id.HQDetailsFragment)
     }
+
 }
