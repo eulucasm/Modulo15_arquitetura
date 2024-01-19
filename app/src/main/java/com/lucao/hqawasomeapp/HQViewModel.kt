@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lucao.hqawasomeapp.data.Comic
 import com.lucao.hqawasomeapp.data.ComicResponse
+import com.lucao.hqawasomeapp.data.DataState
 import com.lucao.hqawasomeapp.hqDetails.HQDetails
 import com.lucao.hqawasomeapp.hqHome.ComicService
 import retrofit2.Call
@@ -23,6 +24,10 @@ class HQViewModel : ViewModel() {
         get() = _hqListLiveData
     private val _hqListLiveData = MutableLiveData<List<Comic>?>()
 
+    val appState: LiveData<DataState>
+        get() = _appState
+    private val _appState = MutableLiveData<DataState>()
+
     val navigationToDetailLiveData
         get() = _navigationToDetailLiveData
     private val _navigationToDetailLiveData = MutableLiveData<Unit>()
@@ -35,6 +40,7 @@ class HQViewModel : ViewModel() {
     private val comicService = retrofit.create(ComicService::class.java)
 
     init {
+        _appState.postValue(DataState.LOADING)
         getHqData()
     }
 
@@ -57,10 +63,14 @@ class HQViewModel : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         _hqListLiveData.postValue(response.body()?.data?.results)
+                        _appState.postValue(DataState.SUCCESS)
+                    } else {
+                        _appState.postValue(DataState.ERROR)
                     }
                 }
+
                 override fun onFailure(call: Call<ComicResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    _appState.postValue(DataState.ERROR)
                 }
             })
     }

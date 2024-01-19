@@ -23,4 +23,7 @@ data class Comic(
     fun getIdString(): String {
         return id?.toString() ?: ""
     }
+
+    fun getImageUrl() = thumbnail?.getFullImagePath()
+
 }

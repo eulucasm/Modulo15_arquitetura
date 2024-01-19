@@ -17,7 +17,9 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:minHeight="350dp"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -42,10 +44,10 @@
                     android:layout_height="200dp"
                     android:contentDescription="@string/imagem_hq"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/comics_news"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcUrl='@{hqItem.imageUrl ?? ""}' />
 
                 <TextView
                     android:id="@+id/content"

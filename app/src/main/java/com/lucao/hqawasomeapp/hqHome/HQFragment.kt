@@ -24,19 +24,25 @@ class HQFragment : Fragment(), HQItemListener {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentItemListBinding.inflate(inflater)
-        val view = binding.root as RecyclerView
-        adapter = MyhqRecyclerViewAdapter(this)
-        setupView(view)
-        initObservers()
-        return view
-    }
 
-    private fun setupView(view: RecyclerView) {
-        view.apply {
+        val view = binding.root
+        val recyclerView = binding.list
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        adapter = MyhqRecyclerViewAdapter(this)
+
+        recyclerView.apply {
             this.adapter = this@HQFragment.adapter
             this.layoutManager = LinearLayoutManager(context)
         }
+
+        initObservers()
+
+        return view
     }
+
 
     private fun initObservers() {
         viewModel.hqListLiveData.observe(viewLifecycleOwner, Observer {
