@@ -283,5 +283,4 @@ fabric.properties
 .idea/sonarlint.xml
 
 .idea/
-
-*.ApiCredentials
+/src/main/java/com/lucao/hqawasomeapp/ApiCredentials.kt
