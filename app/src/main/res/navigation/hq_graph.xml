@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/HQFragment"
-        android:name="com.lucao.hqawasomeapp.HQFragment"
+        android:name="com.lucao.hqawasomeapp.hqHome.HQFragment"
         android:label="fragment_item_list"
-        tools:layout="@layout/fragment_item_list" >
+        tools:layout="@layout/fragment_item_list">
         <action
             android:id="@+id/action_HQFragment_to_HQDetailsFragment"
             app:destination="@id/HQDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/HQDetailsFragment"
-        android:name="com.lucao.hqawasomeapp.HQDetailsFragment"
+        android:name="com.lucao.hqawasomeapp.hqDetails.HQDetailsFragment"
         android:label="fragment_h_q_details"
         tools:layout="@layout/fragment_h_q_details" />
 </navigation>
