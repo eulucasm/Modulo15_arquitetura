@@ -1,11 +1,29 @@
 package com.lucao.hqawasomeapp.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 
+@Entity(
+    foreignKeys = [
+        ForeignKey(
+            entity = Comic::class,
+            parentColumns = ["id"],
+            childColumns = ["comicId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 @JsonClass(generateAdapter = true)
 data class Image(
+    @PrimaryKey(autoGenerate = true)
+    val imageId: Int?,
     val path: String?,
-    val extension: String?
+    val extension: String?,
+    @ColumnInfo(index = true)
+    val comicId: Int?
 ) {
     fun getFullImagePath(): String {
         val pathHttps = path?.replace("http", "https")
