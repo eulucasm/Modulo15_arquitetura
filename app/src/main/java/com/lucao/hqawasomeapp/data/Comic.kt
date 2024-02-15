@@ -1,6 +1,7 @@
 package com.lucao.hqawasomeapp.data
 
 import com.squareup.moshi.JsonClass
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 @JsonClass(generateAdapter = true)
 data class Comic(
@@ -9,6 +10,7 @@ data class Comic(
     val description: String?,
     val textObject: List<TextObject>?,
     val thumbnail: Image?,
+    val images: List<Image>?
 ) {
     fun getContent(): String {
         return when {
@@ -20,10 +22,12 @@ data class Comic(
         }
     }
 
-    fun getIdString(): String {
-        return id?.toString() ?: ""
-    }
+    fun getIdString() = id?.toString() ?: ""
 
     fun getImageUrl() = thumbnail?.getFullImagePath()
+
+    fun getCarouselImage():List<CarouselItem>? = images?.map {
+        CarouselItem(imageUrl = it.getFullImagePath())
+    }
 
 }

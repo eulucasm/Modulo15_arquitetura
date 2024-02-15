@@ -37,9 +37,7 @@ class HQFragment : Fragment(), HQItemListener {
             this.adapter = this@HQFragment.adapter
             this.layoutManager = LinearLayoutManager(context)
         }
-
         initObservers()
-
         return view
     }
 
@@ -52,8 +50,10 @@ class HQFragment : Fragment(), HQItemListener {
         })
 
         viewModel.navigationToDetailLiveData.observe(viewLifecycleOwner, Observer {
-            val action = HQFragmentDirections.actionHQFragmentToHQDetailsFragment()
-            findNavController().navigate(action)
+            it.getContentIfNotHandled()?.let {
+                val action = HQFragmentDirections.actionHQFragmentToHQDetailsFragment()
+                findNavController().navigate(action)
+            }
         })
     }
 

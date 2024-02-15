@@ -4,11 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="com.lucao.hqawasomeapp.data.DataState" />
-
         <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="com.lucao.hqawasomeapp.HQViewModel" />

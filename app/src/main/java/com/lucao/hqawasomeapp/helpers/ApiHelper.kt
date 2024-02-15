@@ -1,4 +1,4 @@
-package com.lucao.hqawasomeapp
+package com.lucao.hqawasomeapp.helpers
 
 import java.math.BigInteger
 import java.security.MessageDigest
