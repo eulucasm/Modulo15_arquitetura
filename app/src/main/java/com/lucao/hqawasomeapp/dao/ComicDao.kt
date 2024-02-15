@@ -4,11 +4,14 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.lucao.hqawasomeapp.data.Comic
 import com.lucao.hqawasomeapp.data.ComicWithAllProperties
+import com.lucao.hqawasomeapp.database.ComicsDataBase
 
 abstract class ComicDao(
-    private val imageDao: ImageDao,
-    private val textObjectDao: TextObjectDao
+    comicsDataBase: ComicsDataBase
 ) : BaseDao<Comic> {
+
+    private val imageDao = comicsDataBase.imageDao()
+    private val textObjectDao = comicsDataBase.textObjectDao()
 
     @Transaction
     @Query("SELECT * FROM comic")
