@@ -23,7 +23,7 @@ data class Image(
     val path: String?,
     val extension: String?,
     @ColumnInfo(index = true)
-    val comicId: Int?
+    var comicId: Int?
 ) {
     fun getFullImagePath(): String {
         val pathHttps = path?.replace("http", "https")

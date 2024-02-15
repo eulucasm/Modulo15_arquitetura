@@ -24,5 +24,5 @@ data class TextObject(
     val language: String?,
     val text: String?,
     @ColumnInfo(index = true)
-    val comicId: Int?
+    var comicId: Int?
 )
