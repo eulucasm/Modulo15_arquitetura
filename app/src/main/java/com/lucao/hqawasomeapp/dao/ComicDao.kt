@@ -22,6 +22,10 @@ abstract class ComicDao(
     abstract suspend fun getComic(id: Int)
 
     @Transaction
+    @Query("DELETE from comic")
+    abstract suspend fun clearComicsData()
+
+    @Transaction
     open suspend fun insertComicList(comicList: List<Comic>) {
         comicList.forEach {
             insertComic(it)

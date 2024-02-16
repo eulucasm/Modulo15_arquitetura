@@ -1,5 +1,7 @@
 package com.lucao.hqawasomeapp
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,12 +11,20 @@ import com.lucao.hqawasomeapp.data.DataState
 import com.lucao.hqawasomeapp.api.ComicService
 import com.lucao.hqawasomeapp.data.ApiCredentials
 import com.lucao.hqawasomeapp.data.Event
+import com.lucao.hqawasomeapp.database.ComicsDataBase
 import com.lucao.hqawasomeapp.helpers.ApiHelper
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class HQViewModel : ViewModel() {
+class HQViewModel(
+    application: Application
+) : AndroidViewModel(
+    application
+) {
+
+    private val comicDataBase = ComicsDataBase.getDataBase(application)
+    private val comicDao = comicDataBase.comicDao(comicDataBase)
 
     val hqDetailsLiveData: LiveData<Comic>
         get() = _hqDetailsLiveData
@@ -70,4 +80,11 @@ class HQViewModel : ViewModel() {
             }
         }
     }
+
+    private suspend fun persistComicData(comicList: List<Comic>) {
+        comicDao.clearComicsData()
+        comicDao.insertComicList(comicList)
+    }
+
+
 }
