@@ -10,9 +10,11 @@ import com.lucao.hqawasomeapp.data.Comic
 import com.lucao.hqawasomeapp.data.DataState
 import com.lucao.hqawasomeapp.api.ComicService
 import com.lucao.hqawasomeapp.data.ApiCredentials
+import com.lucao.hqawasomeapp.data.ComicWithAllProperties
 import com.lucao.hqawasomeapp.data.Event
 import com.lucao.hqawasomeapp.database.ComicsDataBase
 import com.lucao.hqawasomeapp.helpers.ApiHelper
+import java.lang.Exception
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -69,15 +71,34 @@ class HQViewModel(
         val hash = ApiHelper.generateMD5Hash(input)
 
         viewModelScope.launch {
-            val response =
-                comicService.getComicsList(timestamp, ApiCredentials.publicKey, hash, 50)
+            try {
+                val response =
+                    comicService.getComicsList(timestamp, ApiCredentials.publicKey, hash, 50)
 
-            if (response.isSuccessful) {
-                _hqListLiveData.postValue(response.body()?.data?.results)
-                _appState.postValue(DataState.SUCCESS)
-            } else {
-                _appState.postValue(DataState.ERROR)
+                if (response.isSuccessful) {
+                    val comics = response.body()?.data?.results
+                    comics?.let {
+                        persistComicData(it)
+                    }
+                    _hqListLiveData.postValue(comics)
+                    _appState.postValue(DataState.SUCCESS)
+                } else {
+                    errorHandling()
+                }
+            } catch (e: Exception) {
+                errorHandling()
             }
+        }
+    }
+
+    private suspend fun errorHandling() {
+        val comicList = loadPersistedComicData()
+
+        if (comicList.isNullOrEmpty()) {
+            _appState.postValue(DataState.ERROR)
+        } else {
+            _hqListLiveData.postValue(comicList)
+            _appState.postValue(DataState.SUCCESS)
         }
     }
 
@@ -86,5 +107,13 @@ class HQViewModel(
         comicDao.insertComicList(comicList)
     }
 
+    private suspend fun loadPersistedComicData() = comicDao.getAllComics()?.map {
+        mapComicWithPropertiesToComic(it)
+    }
 
+    private fun mapComicWithPropertiesToComic(comicWithAllProperties: ComicWithAllProperties): Comic {
+        comicWithAllProperties.comic.images = comicWithAllProperties.images
+        comicWithAllProperties.comic.textObject = comicWithAllProperties.textObject
+        return comicWithAllProperties.comic
+    }
 }

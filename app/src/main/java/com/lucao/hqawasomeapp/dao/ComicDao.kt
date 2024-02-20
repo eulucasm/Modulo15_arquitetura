@@ -1,11 +1,13 @@
 package com.lucao.hqawasomeapp.dao
 
+import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.lucao.hqawasomeapp.data.Comic
 import com.lucao.hqawasomeapp.data.ComicWithAllProperties
 import com.lucao.hqawasomeapp.database.ComicsDataBase
 
+@Dao
 abstract class ComicDao(
     comicsDataBase: ComicsDataBase
 ) : BaseDao<Comic> {
@@ -15,11 +17,11 @@ abstract class ComicDao(
 
     @Transaction
     @Query("SELECT * FROM comic")
-    abstract suspend fun getAllComics(): List<ComicWithAllProperties>
+    abstract suspend fun getAllComics(): List<ComicWithAllProperties>?
 
     @Transaction
     @Query("SELECT * FROM comic WHERE id=:id")
-    abstract suspend fun getComic(id: Int)
+    abstract suspend fun getComic(id: Int): ComicWithAllProperties?
 
     @Transaction
     @Query("DELETE from comic")
