@@ -34,7 +34,7 @@ class HQViewModel(application: Application) : AndroidViewModel(application) {
     val navigationToDetailLiveData get() = _navigationToDetailLiveData
     private val _navigationToDetailLiveData = MutableLiveData<Event<Unit>>()
 
-    private val hqRepository = HQRepository()
+    private val hqRepository = HQRepository(application)
 
     init {
         _appState.postValue(DataState.LOADING)
